@@ -6,7 +6,10 @@ Since RC4 (including RC4-drop[n]) is widely believed to be insecure, using this 
 ## Usage
 ```py
 import RC4_drop
-rc4 = RC4_drop.RC4("foo", 768) # foo is the key, n = 768
-ciphertext = rc4.cipher("bar") # bar is the plaintext
-print(ciphertext) # prints the ciphertext in hex format
+
+rc4 = RC4_drop.RC4("0102030405", 768) # key, offset
+ciphertext_1 = rc4.cipher("0102030405", "hex", "plain") # hex plaintext, ascii ciphertext
+ciphertext_2 = rc4.cipher("foo", "plain", "file") # ascii plaintext, file ciphertext
+ciphertext_3 = rc4.cipher("bar", "file", "hex") # file plaintext, hex ciphertext
+print(ciphertext_1, ciphertext_2, ciphertext_3)
 ```
