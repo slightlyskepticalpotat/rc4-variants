@@ -47,8 +47,11 @@ class RC4:
         keystream = self.PRGA()
         for i in range(self.n):
             next(keystream)
-        ciphertext = [plaintext[i] ^ next(keystream) for i in range(
+        
+        keystream_used = [next(keystream) for i in range(
             len(plaintext))]
+        ciphertext = [plaintext[i] ^ keystream_used[i] for i in range(len(plaintext))]
+        self.keystream_used = keystream_used
 
         if out_format == "plain":
             return "".join(map(chr, ciphertext))
@@ -57,8 +60,7 @@ class RC4:
         elif out_format == "file":
             self.write_file("".join(map(chr, ciphertext)))
             return "data"
-        else:
-            raise NotImplementedError
+        raise NotImplementedError
 
 
 class RC4A(RC4):
